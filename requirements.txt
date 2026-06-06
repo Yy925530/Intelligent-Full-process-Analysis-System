@@ -1,6 +1,6 @@
 streamlit==1.45.1
 pandas==2.2.3
-numpy==2.4.6
+numpy==1.26.4
 scipy==1.15.3
 scikit-learn==1.6.1
 matplotlib==3.10.0
@@ -9,4 +9,4 @@ openpyxl==3.1.5
 fonttools
 matplotlib
 python-docx
-fonts-dejavu-cjk
+
