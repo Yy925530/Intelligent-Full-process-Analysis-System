@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 销售数据全流程智能分析系统
 ================================
@@ -1047,7 +1046,7 @@ from datetime import datetime
 from docx import Document
 from docx.shared import Pt
 from docx.oxml.ns import qn
-
+conclusion_items = locals().get('conclusion_items', [])
 st.divider()
 st.subheader("报告与数据导出")
 
