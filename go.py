@@ -47,9 +47,14 @@ st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
 # matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use("Agg")
-plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei","DejaVu Sans","SimHei"]
+import platform
+# 自动区分系统切换字体
+if platform.system() == "Linux":
+    # 云端Linux用英文内置字体
+    plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
+else:
+    # Windows本地用黑体
+    plt.rcParams["font.sans-serif"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
 
