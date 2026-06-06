@@ -48,7 +48,7 @@ st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
 # matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib.pyplot as plt
-plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei"]
+plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei","DejaVu Sans","SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
 
