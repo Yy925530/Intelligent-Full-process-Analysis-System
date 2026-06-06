@@ -1047,6 +1047,7 @@ from docx import Document
 from docx.shared import Pt
 from docx.oxml.ns import qn
 conclusion_items = locals().get('conclusion_items', [])
+enterprise_advice = locals().get('enterprise_advice', '暂无经营建议')  # 👈 加这行
 st.divider()
 st.subheader("报告与数据导出")
 
