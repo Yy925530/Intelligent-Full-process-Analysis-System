@@ -842,7 +842,7 @@ if len(numeric_cols_for_corr) > 1:
 # 价格-销量散点
 if "价格" in df_clean.columns and "销量" in df_clean.columns:
     st.markdown("### 价格与销量关系分析")
-    df_price_sales = df_clean[df_price_sales["价格"].notna() & df_price_sales["销量"].notna()].copy()
+    df_price_sales = df_clean[df_clean["价格"].notna() & df_clean["销量"].notna()].copy()
     if not df_price_sales.empty:
         fig, ax = plt.subplots(figsize=(5, 3), dpi=120)
         ax.scatter(df_price_sales["价格"], df_price_sales["销量"], alpha=0.5, c='steelblue')
