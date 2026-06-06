@@ -1044,15 +1044,17 @@ if "价格" in df_clean.columns and "折扣" in df_clean.columns:
 # ==================== 报告导出功能 ====================
 import io
 from datetime import datetime
-# 把docx、io导入挪到代码头部，取消try内局部导入，解决No module named 'docx'报错
 from docx import Document
 from docx.shared import Pt
 from docx.oxml.ns import qn
-conclusion_items = locals().get('conclusion_items', [])
-enterprise_advice = locals().get('enterprise_advice', '暂无经营建议')  # 👈 加这行
+# ==========新增开始==========
+conclusion_items = locals().get("conclusion_items", ["数据清洗完成，基础指标正常"])
+enterprise_advice = locals().get("enterprise_advice", "暂无专项经营优化建议")
+top1 = locals().get("top1", "未识别关键影响指标")
+top2 = locals().get("top2", "未识别次要影响指标")
+# ==========新增结束==========
 st.divider()
 st.subheader("报告与数据导出")
-
 report_content = f"""
 企业销售数据分析与经营决策报告
 ================================
