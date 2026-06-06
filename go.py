@@ -533,16 +533,16 @@ if date_col and date_col in df_clean.columns:
             
             fig, axes = plt.subplots(1, 2, figsize=(10, 3), dpi=120)
             monthly_sales.plot(ax=axes[0], marker='o', color="#2076b4", linewidth=2)
-            axes[0].set_title("月度销售额趋势", fontsize=10)
-            axes[0].set_xlabel("月份", fontsize=8)
-            axes[0].set_ylabel("销售额（元）", fontsize=8)
+            axes[0].set_title("月度销售额趋势", fontsize=10,fontproperties=cn_font)
+            axes[0].set_xlabel("月份", fontsize=8,fontproperties=cn_font)
+            axes[0].set_ylabel("销售额（元）", fontsize=8,fontproperties=cn_font)
             axes[0].grid(True, alpha=0.3)
             
             if monthly_quantity is not None:
                 monthly_quantity.plot(ax=axes[1], marker='s', color='#ff7f0e', linewidth=2)
-                axes[1].set_title("月度销量趋势", fontsize=10)
-                axes[1].set_xlabel("月份", fontsize=8)
-                axes[1].set_ylabel("销量", fontsize=8)
+                axes[1].set_title("月度销量趋势", fontsize=10,fontproperties=cn_font)
+                axes[1].set_xlabel("月份", fontsize=8,fontproperties=cn_font)
+                axes[1].set_ylabel("销量", fontsize=8,fontproperties=cn_font)
                 axes[1].grid(True, alpha=0.3)
             
             plt.tight_layout(pad=0.3)
