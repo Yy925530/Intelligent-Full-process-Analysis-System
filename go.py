@@ -47,20 +47,17 @@ st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
 # matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib
-# Agg必须放在import plt最前面，解决云端空白
-matplotlib.use("Agg")
+matplotlib.use("Agg") # 必须放最前，解决图表空白
 import matplotlib.pyplot as plt
 import platform
-# Windows：黑体；Linux云端：Noto Sans CJK SC（系统预装中文，不用DejaVu）
+
+# Streamlit Linux云端预装DejaVuSansCJK，不用装额外字体
 if platform.system() == "Linux":
-    plt.rcParams["font.sans-serif"] = ["Noto Sans CJK SC"]
+    plt.rcParams["font.sans-serif"] = ["DejaVu Sans CJK"]
 else:
     plt.rcParams["font.sans-serif"] = ["SimHei","Microsoft YaHei"]
-plt.rcParams["axes.unicode_minus"] = False
-# 刷新mat字体缓存，改字体立刻生效
-from matplotlib.font_manager import _rebuild
-_rebuild()
 
+plt.rcParams["axes.unicode_minus"] = False
 # ==================== 辅助函数定义 ====================
 
 def clean_price_format(price_value):
