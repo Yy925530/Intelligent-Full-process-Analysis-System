@@ -42,9 +42,6 @@ import warnings
 import io
 from datetime import datetime
 warnings.filterwarnings('ignore')
-import plotly.io as pio
-# 全局指定Linux可用开源中文字体 WenQuanYi Micro Hei（云端预装）
-pio.update_layout(font_family="WenQuanYi Micro Hei")
 # 页面全局配置
 st.set_page_config(page_title="销售数据全流程智能分析系统", layout="wide")
 st.title("销售数据全流程智能分析系统")
