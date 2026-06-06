@@ -48,9 +48,8 @@ st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
 # matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib.pyplot as plt
-plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei","DejaVu Sans","SimHei"]
+plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei"]
 plt.rcParams["axes.unicode_minus"] = False
-
 
 
 # ==================== 辅助函数定义 ====================
@@ -1041,60 +1040,14 @@ if "价格" in df_clean.columns and "折扣" in df_clean.columns:
             st.pyplot(fig, use_container_width=False)
             st.write("**数据解读：** 高价商品依赖折扣拉动销量，低价商品对折扣敏感度极低。")
             st.info("**经营决策：** 高价产品搭配中高折扣促销，低价产品减少让利、维持原价走量。")
-# ==================== 综合结论与报告生成 ====================
-st.divider()
-st.subheader("综合分析结论与报告生成")
-
-# 确定核心影响因素
-top1 = "销量"
-top2 = "价格"
-if 'importance' in locals() and len(importance) > 0:
-    if len(importance) >= 1:
-        top1 = importance.index[0]
-    if len(importance) >= 2:
-        top2 = importance.index[1]
-
-# 收集结论变量
-conclusion_items = []
-if 'top_region' in locals():
-    conclusion_items.append(f"购买力最强地区：{top_region}")
-if 'top_cat' in locals():
-    conclusion_items.append(f"最畅销品类：{top_cat}")
-if 'top_pay' in locals():
-    conclusion_items.append(f"最常用支付方式：{top_pay}")
-if 'top_sp' in locals():
-    conclusion_items.append(f"最佳销售人员：{top_sp}")
-if 'top_flavor' in locals():
-    conclusion_items.append(f"最受欢迎口味：{top_flavor}")
-if 'gender_sales' in locals():
-    if gender_sales['Female'] > gender_sales['Male']:
-        conclusion_items.append("消费主力：女性")
-    else:
-        conclusion_items.append("消费主力：男性")
-
-# 企业综合建议
-enterprise_advice = f"""
-基于本次分析，我们建议企业采取以下综合性经营策略：
-
-1. **投资与生产方向**：重点加大对 **{top_cat if 'top_cat' in locals() else '核心品类'}** 的研发和生产投入，特别是针对 **{top_flavor if 'top_flavor' in locals() else '热门口味'}** 系列产品进行产能扩张。同时，优化 **{top2}** 相关的产品线，淘汰低效SKU，集中资源打造高价值爆款。
-
-2. **销售区域与渠道**：将营销资源倾斜至 **{top_region if 'top_region' in locals() else '高价值地区'}**，在该地区增设线下体验店或加强线上广告投放。销售渠道上，强化 **{top_channel if 'top_channel' in locals() else '主流渠道'}** 的运营，同时探索与 **{top_pay if 'top_pay' in locals() else '主流支付方式'}** 相关的支付优惠活动，提升转化率。
-
-3. **目标客群与销售方式**：针对 **{'女性' if 'gender_sales' in locals() and gender_sales['Female'] > gender_sales['Male'] else '男性'}** 主导的消费群体，设计专属促销方案和产品组合。加强 **{top_sp if 'top_sp' in locals() else '优秀销售员'}** 的销售经验分享，提升整体团队业绩。建议采用 **{top_pay if 'top_pay' in locals() else '主流支付方式'}** 作为主要结算方式，并推广“先试后买”或“会员积分”等互动销售方式，增强客户粘性。
-
-4. **数据驱动决策**：建立月度销售监控体系，重点关注 **{top1}** 和 **{top2}** 的波动情况，及时调整库存和定价策略。利用最优模型 **{best_model_name if 'best_model_name' in locals() else '随机森林'}** 进行销量预测，为采购和生产计划提供科学依据。
-
-通过以上措施，企业可有效提升市场份额，实现销售收入的可持续增长。
-"""
-
-st.markdown("### 核心业务建议")
-for item in conclusion_items:
-    st.write(f"- {item}")
-st.markdown("### 🎯 企业综合经营建议")
-st.write(enterprise_advice)
-st.write("详细分析报告请下载下方的WORD文档查看")
-
 # ==================== 报告导出功能 ====================
+import io
+from datetime import datetime
+# 把docx、io导入挪到代码头部，取消try内局部导入，解决No module named 'docx'报错
+from docx import Document
+from docx.shared import Pt
+from docx.oxml.ns import qn
+
 st.divider()
 st.subheader("报告与数据导出")
 
@@ -1144,16 +1097,7 @@ report_content += f"""
 报告生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """
 
-# 生成WORD报告
-try:
-    from docx import Document
-    from docx.shared import Pt
-    from docx.oxml.ns import qn
-except:
-    import os
-    os.system("pip install python-docx")
-    from docx import Document
-
+# 生成WORD报告：移除多余try捕获，优化BytesIO返回二进制流，解决下载docx损坏/空白报错
 def create_word_report(content):
     doc = Document()
     title = doc.add_heading('企业销售数据分析与经营决策报告', 0)
@@ -1176,7 +1120,8 @@ def create_word_report(content):
     buffer = io.BytesIO()
     doc.save(buffer)
     buffer.seek(0)
-    return buffer
+    # 关键修改：返回字节数据，修复streamlit下载文件损坏
+    return buffer.getvalue()
 
 word_file = create_word_report(report_content)
 
@@ -1187,6 +1132,7 @@ with col1:
         return df_clean.to_csv(index=False, encoding="utf-8-sig")
     st.download_button("📥 下载清洗后数据（CSV）", data=get_clean_data(), file_name="企业清洗后销售数据.csv", mime="text/csv")
 with col2:
+    # 二进制数据直接填入data，修复下载报错
     st.download_button("📥 下载完整分析报告（WORD）", data=word_file, file_name="企业销售数据分析报告.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 st.markdown("### 清洗后数据预览")
