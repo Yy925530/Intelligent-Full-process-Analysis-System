@@ -47,17 +47,21 @@ st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
 # matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib
-matplotlib.use("Agg") # 必须放最前，解决图表空白
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 import platform
 
-# Streamlit Linux云端预装DejaVuSansCJK，不用装额外字体
+# ==========方案：云端使用matplotlib内置开源思源黑体Noto Sans CJK（不用装系统字体）==========
+# 全局备选字体列表，Linux云端优先Noto Sans CJK，Windows本地黑体/雅黑
 if platform.system() == "Linux":
-    plt.rcParams["font.sans-serif"] = ["DejaVu Sans CJK"]
+    plt.rcParams["font.sans-serif"] = ["Noto Sans CJK SC"]
 else:
-    plt.rcParams["font.sans-serif"] = ["SimHei","Microsoft YaHei"]
+    plt.rcParams["font.sans-serif"] = ["SimHei", "Microsoft YaHei"]
 
 plt.rcParams["axes.unicode_minus"] = False
+# 兜底：单个绘图标题/坐标轴异常时手动加字体，二选一全局生效
+myfont = FontProperties(family="Noto Sans CJK SC")
 # ==================== 辅助函数定义 ====================
 
 def clean_price_format(price_value):
