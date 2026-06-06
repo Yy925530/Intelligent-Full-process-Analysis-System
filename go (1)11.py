@@ -52,7 +52,7 @@ from matplotlib.font_manager import FontProperties
 import os
 
 # 检查字体文件是否存在（字体文件需放在项目根目录，命名为 SimHei.ttf）
-font_path = "SimHei.ttf"
+font_path = "simhei.ttf"
 if os.path.exists(font_path):
     chinese_font = FontProperties(fname=font_path)
     plt.rcParams['font.family'] = chinese_font.get_name()
