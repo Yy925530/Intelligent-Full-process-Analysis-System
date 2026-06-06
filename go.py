@@ -45,23 +45,16 @@ warnings.filterwarnings('ignore')
 st.set_page_config(page_title="销售数据全流程智能分析系统", layout="wide")
 st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
-# matplotlib全局固定字体配置，所有绘图统一生效
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-import platform
-
-# ==========方案：云端使用matplotlib内置开源思源黑体Noto Sans CJK（不用装系统字体）==========
-# 全局备选字体列表，Linux云端优先Noto Sans CJK，Windows本地黑体/雅黑
-if platform.system() == "Linux":
-    plt.rcParams["font.sans-serif"] = ["Noto Sans CJK SC"]
-else:
-    plt.rcParams["font.sans-serif"] = ["SimHei", "Microsoft YaHei"]
-
+# 【万能兜底：优先英文默认字体，中文靠手动指定，彻底规避找不到中文字体报错】
+plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
-# 兜底：单个绘图标题/坐标轴异常时手动加字体，二选一全局生效
-myfont = FontProperties(family="Noto Sans CJK SC")
+# 内置英文保底，中文文字绘图时单独绑定字体
+from matplotlib.font_manager import FontProperties
+# 打包一个通用空字体变量，后面画图按需用
+cn_font = FontProperties()
 # ==================== 辅助函数定义 ====================
 
 def clean_price_format(price_value):
