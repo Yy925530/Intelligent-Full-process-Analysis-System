@@ -51,18 +51,22 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 import os
 
-# 检查字体文件是否存在（字体文件需放在项目根目录，命名为 SimHei.ttf）
 font_path = "simhei.ttf"
+
 if os.path.exists(font_path):
     chinese_font = FontProperties(fname=font_path)
     plt.rcParams['font.family'] = chinese_font.get_name()
 else:
     # 如果没有字体文件，使用英文默认字体（中文会变方框）
     plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
+
 plt.rcParams["axes.unicode_minus"] = False
 
 # 保留 cn_font 变量（以防后面有代码用到）
-cn_font = FontProperties() if 'chinese_font' not in dir() else chinese_font
+if 'chinese_font' in dir():
+    cn_font = chinese_font
+else:
+    cn_font = FontProperties()  # 空字体，仅用于兼容
 # ==================== 辅助函数定义 ====================
 
 def clean_price_format(price_value):
