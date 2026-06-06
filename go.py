@@ -46,9 +46,11 @@ warnings.filterwarnings('ignore')
 st.set_page_config(page_title="销售数据全流程智能分析系统", layout="wide")
 st.title("销售数据全流程智能分析系统")
 st.markdown("**数据清洗 → 异常检测 → 可视化分析 → 多模型对比 → 报告生成**")
-# 替换字体：云端自带文泉驿微米黑，本地Windows也兼容
-plt.rcParams['font.sans-serif'] = ['WenQuanYi Micro Hei']
-plt.rcParams['axes.unicode_minus'] = False  # 解决负号变成方框
+# matplotlib全局固定字体配置，所有绘图统一生效
+import matplotlib.pyplot as plt
+plt.rcParams["font.sans-serif"] = ["WenQuanYi Micro Hei"]
+plt.rcParams["axes.unicode_minus"] = False
+
 
 # ==================== 辅助函数定义 ====================
 
