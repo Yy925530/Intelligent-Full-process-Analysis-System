@@ -63,7 +63,7 @@ if os.path.exists(font_path):
     plt.rcParams['font.family'] = font_name
     plt.rcParams['font.sans-serif'] = [font_name] + plt.rcParams['font.sans-serif']
     plt.rcParams['axes.unicode_minus'] = False
-    st.success(f"✅ 字体已加载: {font_name}")
+    
 else:
     st.warning("⚠️ 未找到 simhei.ttf 文件，请确认字体文件已上传")
     plt.rcParams['font.sans-serif'] = ['DejaVu Sans']
